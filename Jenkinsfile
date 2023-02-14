@@ -23,7 +23,7 @@ pipeline {
         stage("Deploy on Test"){
             steps{
                 // deploy on container -> plugin
-                deploy adapters: [tomcat9(credentialsId: 'tomcatnew', path: '', url: 'http://35.154.16.246:8080')], contextPath: 'app', war: '**/*.war'
+                deploy adapters: [tomcat9(credentialsId: 'tomcatnew', path: '', url: 'http://135.154.16.246:8080')], contextPath: 'app', war: '**/*.war'
                 //deploy adapters: [tomcat9(credentialsId: 'tomcatserver', path: '', url: 'http://13.233.106.97:8080')], contextPath: '/apps', war: '**/*.war'
                 //deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://13.233.106.97:8080')], contextPath: '/app', war: '**/*.war'
               
@@ -38,7 +38,7 @@ pipeline {
             
                steps{
                    // deploy on container -> plugin
-//                    deploy adapters: [tomcat9(credentialsId: 'tomcatserver', path: '', url: 'http://3.109.60.246:8080')], contextPath: '/app', war: '**/*.war'
+//                    deploy adapters: [tomcat9(credentialsId: 'tomcatserver', path: '', url: 'http://13.109.60.246:8080')], contextPath: '/app', war: '**/*.war'
                    deploy adapters: [tomcat9(credentialsId: 'tomcatnew', path: '', url: 'http://3.109.60.246:8080')], contextPath: 'app', war: '**/*.war'
 //                 //deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://3.108.193.74:8080')], contextPath: '/app', war: '**/*.war'
 
