@@ -4,6 +4,15 @@ pipeline {
         maven 'MAVEN_HOME' 
         }
     stages {
+        stage("git checkout"){
+            steps{
+                git url: 'https://github.com/sandee09412/spring-boot-war-example.git'
+                // mvn test
+               // sh "mvn test"
+                //  bat "mvn test"
+               // slackSend channel: 'youtubejenkins', message: 'Job Started'
+                
+            }
         stage("Test"){
             steps{
                 // mvn test
