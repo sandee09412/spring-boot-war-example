@@ -24,6 +24,7 @@ pipeline {
                   bat "mvn package"
                 //sh "mvn package"
                // slackSend channel: 'youtubejenkins', message: 'Job build'
+                  bat 'echo $WORKSPACE/Artifact_$BUILD_NUMBER'
             }
             
         }
@@ -42,6 +43,9 @@ pipeline {
         stage('Upload'){
             steps{
                 rtUpload (
+                 buildNumber: BUILD_NUMBER,
+                 buildName: JOB_NAME,
+                 #buildId: BUILD_ID,
                  serverId:"Artifactory" ,
                   spec: '''{
                    "files": [
