@@ -45,7 +45,7 @@ pipeline {
                 rtUpload (
                  buildNumber: BUILD_NUMBER,
                  buildName: JOB_NAME,
-                 #buildId: BUILD_ID,
+          
                  serverId:"Artifactory" ,
                   spec: '''{
                    "files": [
