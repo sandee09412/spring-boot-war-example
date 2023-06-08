@@ -97,7 +97,7 @@ pipeline {
         success{
             emailext attachLog: true, body: 'Email sent out from Jenkins', replyTo: 'prabhakarq3@gmail.com', subject: 'Test Email', to: 'sandeep09412@gmail.com'
         }
-        always{
+       /* always{
             echo "========always========"
         }
         success{
@@ -109,4 +109,5 @@ pipeline {
            // slackSend channel: 'youtubejenkins', message: 'Job UnSuccess'
         }
     }
+    */
 }
