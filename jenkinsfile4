@@ -1,0 +1,19 @@
+pipeline{
+  agent any
+ stages{
+   stage ('build') {
+    steps{
+      echo "Building the project"
+      }
+     }
+    }
+  post {
+   success {
+     emailext attachLog: true, body: 'Email sent out from jenkins', subject: 'Testing Email', to: 'prabhakarq3@gmail.com'
+     }
+   failure {
+   emailext attachLog: true, body: 'Email sent out from jenkins', subject: 'Testing Email', to: 'prabhakarq3@gmail.com' 
+   }
+  }
+ }
+    
