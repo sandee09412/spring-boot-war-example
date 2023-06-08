@@ -97,6 +97,9 @@ pipeline {
         success{
             emailext attachLog: true, body: 'Email sent out from Jenkins', replyTo: 'prabhakarq3@gmail.com', subject: 'Test Email', to: 'sandeep09412@gmail.com'
         }
+        failure{
+            emailext attachLog: true, body: 'Email sent out from Jenkins', replyTo: 'prabhakarq3@gmail.com', subject: 'Test Email', to: 'sandeep09412@gmail.com'
+        }
        /* always{
             echo "========always========"
         }
