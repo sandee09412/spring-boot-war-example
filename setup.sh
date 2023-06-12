@@ -42,7 +42,7 @@ installPackage tomcat9
 mavenTarget test
 mavenTarget package
 
-//if cp -rf target/hello-world-0.0.1-SNAPSHOT.war /var/lib/tomcat9/webapps/${APP_CONTEXT}.war
+if cp -rf target/hello-world-0.0.1-SNAPSHOT.war /var/lib/tomcat9/webapps/${APP_CONTEXT}.war
 then
     echo "application Deployed successfully. you can access it on http://{IPADDRESS}/${APP_CONTEXT}"
 else
