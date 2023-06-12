@@ -101,11 +101,6 @@ pipeline {
             echo "========pipeline execution failed========"
            // slackSend channel: 'youtubejenkins', message: 'Job UnSuccess'
         }
-         //  success {
-    // emailext attachLog: true, body: 'Email sent out from Jenkins', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'prabhakarq3@gmail.com'
-    // }
-  // failure {
-   //  emailext attachLog: true, body: 'Email sent out from Jenkins', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'prabhakarq3@gmail.com'
-  // }
-    }
+         
+       }
    }
