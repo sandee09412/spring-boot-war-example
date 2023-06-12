@@ -31,8 +31,7 @@ pipeline {
                    echo 'file exist'
                }
            }
-       
-    }
+      
          stage ('Server'){
             steps {
                rtServer (
