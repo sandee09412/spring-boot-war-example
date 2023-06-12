@@ -6,7 +6,8 @@ pipeline {
     stages {
         stage("git checkout"){
             steps{
-                git url: 'https://github.com/sandee09412/spring-boot-war-example.git'
+               // git url: 'https://github.com/sandee09412/spring-boot-war-example.git'
+                git branch: 'master', url: 'https://github.com/sandee09412/spring-boot-war-example.git'
             }
             }
         stage("Test"){
