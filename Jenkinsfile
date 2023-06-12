@@ -25,7 +25,7 @@ pipeline {
                   bat "mvn package"
                 //sh "mvn package"
                // slackSend channel: 'youtubejenkins', message: 'Job build'
-                  bat 'echo $WORKSPACE/Artifact_$BUILD_NUMBER'
+               //  bat 'echo $WORKSPACE/Artifact_$BUILD_NUMBER'
             }
             
         }
