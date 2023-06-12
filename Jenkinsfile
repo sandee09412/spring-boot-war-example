@@ -24,6 +24,15 @@ pipeline {
             }
             
         }
+         //         stage("Artifect file exist"){
+               steps{
+                  echo 'cheking file in work space'
+                   fileExists 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Maven-project-pipeline\\target\\hello-world-1.$(BUILD_NUMBER)-SNAPSHOT.war'
+                   echo 'file exist'
+               }
+           }
+       
+    }
          stage ('Server'){
             steps {
                rtServer (
@@ -43,7 +52,8 @@ pipeline {
                   spec: '''{
                    "files": [
                       {
-                      "pattern": "*.war",
+                      //"pattern": "*.war",
+                      "pattern": "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Maven-project-pipeline\\target\\hello-world-1.$(BUILD_NUMBER)-SNAPSHOT.war",
                       "target": "logic-ops-lab-libs-snapshot-local"
                       }
                             ]
@@ -78,15 +88,7 @@ pipeline {
 
                }
         }
-        //         stage("Artifect file exist"){
-//             steps{
-//                echo 'cheking file in work space'
-//                 fileExists 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Maven-project-pipeline\\target\\hello-world-1.$(BUILD_NUMBER)-SNAPSHOT.war'
-//                 echo 'file exist'
-//             }
-//         }
        
-    }
     post{
      
         always{
