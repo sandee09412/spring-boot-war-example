@@ -29,13 +29,13 @@ pipeline {
             }
             
         }
-        stage("Artifect file exist"){
-            steps{
-               echo 'cheking file in work space'
-                fileExists 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Maven-project-pipeline\\target\\hello-world-1.$(BUILD_NUMBER)-SNAPSHOT.war'
-                echo 'file exist'
-            }
-        }
+//         stage("Artifect file exist"){
+//             steps{
+//                echo 'cheking file in work space'
+//                 fileExists 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Maven-project-pipeline\\target\\hello-world-1.$(BUILD_NUMBER)-SNAPSHOT.war'
+//                 echo 'file exist'
+//             }
+//         }
          stage ('Server'){
             steps {
                rtServer (
@@ -51,9 +51,6 @@ pipeline {
         stage('Upload'){
             steps{
                 rtUpload (
-                  //  buildNumber: BUILD_NUMBER,
-                  //  buildName: JOB_NAME,
-          
                  serverId:"Artifactory" ,
                   spec: '''{
                    "files": [
@@ -74,39 +71,7 @@ pipeline {
                 )
             }
         }
-//         stage ('Upload') {
-//             steps {
-//                 rtUpload (
-//                     buildName: JOB_NAME,
-//                     buildNumber: BUILD_NUMBER,
-//                     serverId: SERVER_ID, // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
-//                     spec: '''{
-//                               "files": [
-//                                  {
-//                                   "pattern": "$WORKSPACE/Demo-Artifactory/Artifact_*",
-//                                   "target": "result/",
-//                                   "recursive": "false"
-//                                 } 
-//                              ]
-//                         }'''    
-//                     )
-//             }
-//         }
-//         stage ('Publish build info') {
-//             steps {
-//                 rtPublishBuildInfo (
-//                     buildName: JOB_NAME,
-//                     buildNumber: BUILD_NUMBER,
-//                     serverId: SERVER_ID
-//                 )
 
-//                 rtPublishBuildInfo (
-//                     buildName: JOB_NAME,
-//                     buildNumber: BUILD_NUMBER,
-//                     serverId: SERVER_ID
-//                 )
-//             }
-//         }
         stage("Deploy on Test"){
             steps{
                 // deploy on container -> plugin
@@ -129,12 +94,7 @@ pipeline {
        
     }
     post{
-      //  success {
-    // emailext attachLog: true, body: 'Email sent out from Jenkins', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'prabhakarq3@gmail.com'
-    // }
-  // failure {
-   //  emailext attachLog: true, body: 'Email sent out from Jenkins', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'prabhakarq3@gmail.com'
-  // }
+     
         always{
             echo "========always========"
         }
@@ -145,7 +105,13 @@ pipeline {
         failure{
             echo "========pipeline execution failed========"
            // slackSend channel: 'youtubejenkins', message: 'Job UnSuccess'
-        } 
+        }
+         //  success {
+    // emailext attachLog: true, body: 'Email sent out from Jenkins', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'prabhakarq3@gmail.com'
+    // }
+  // failure {
+   //  emailext attachLog: true, body: 'Email sent out from Jenkins', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'prabhakarq3@gmail.com'
+  // }
     }
    
 }
