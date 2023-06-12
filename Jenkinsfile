@@ -108,6 +108,5 @@ pipeline {
   // failure {
    //  emailext attachLog: true, body: 'Email sent out from Jenkins', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'prabhakarq3@gmail.com'
   // }
-  //  }
-   
-}
+    }
+   }
