@@ -94,12 +94,12 @@ pipeline {
        
     }
     post{
-        success{
-            emailext attachLog: true, body: 'Email sent out from Jenkins', replyTo: 'prabhakarq3@gmail.com', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'prabhakarq3@gmail.com'
-        }
-        failure{
-            emailext attachLog: true, body: 'Email sent out from Jenkins', replyTo: 'prabhakarq3@gmail.com', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'prabhakarq3@gmail.com'
-        }
+        success {
+     emailext attachLog: true, body: 'Email sent out from Jenkins', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'prabhakarq3@gmail.com'
+     }
+   failure {
+     emailext attachLog: true, body: 'Email sent out from Jenkins', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'prabhakarq3@gmail.com'
+   }
        /* always{
             echo "========always========"
         }
