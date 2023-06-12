@@ -14,8 +14,6 @@ pipeline {
                 // mvn test
                // sh "mvn test"
                   bat "mvn test"
-               // slackSend channel: 'youtubejenkins', message: 'Job Started'
-               // fileExists 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Maven-project-pipeline\\target\\hello-world-1.$(BUILD_NUMBER)-SNAPSHOT.war'
             }
             
         }
@@ -23,19 +21,9 @@ pipeline {
         stage("Build"){
             steps{
                   bat "mvn package"
-                //sh "mvn package"
-               // slackSend channel: 'youtubejenkins', message: 'Job build'
-               //   bat 'echo $WORKSPACE/Artifact_$BUILD_NUMBER'
             }
             
         }
-//         stage("Artifect file exist"){
-//             steps{
-//                echo 'cheking file in work space'
-//                 fileExists 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Maven-project-pipeline\\target\\hello-world-1.$(BUILD_NUMBER)-SNAPSHOT.war'
-//                 echo 'file exist'
-//             }
-//         }
          stage ('Server'){
             steps {
                rtServer (
@@ -57,7 +45,6 @@ pipeline {
                       {
                       "pattern": "*.war",
                       "target": "logic-ops-lab-libs-snapshot-local",
-                      "recursive": "false"
                       }
                             ]
                            }''',
@@ -91,6 +78,13 @@ pipeline {
 
                }
         }
+        //         stage("Artifect file exist"){
+//             steps{
+//                echo 'cheking file in work space'
+//                 fileExists 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Maven-project-pipeline\\target\\hello-world-1.$(BUILD_NUMBER)-SNAPSHOT.war'
+//                 echo 'file exist'
+//             }
+//         }
        
     }
     post{
