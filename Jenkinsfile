@@ -15,10 +15,11 @@ pipeline {
                // sh "mvn test"
                   bat "mvn test"
                // slackSend channel: 'youtubejenkins', message: 'Job Started'
-                
+               // fileExists 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Maven-project-pipeline\\target\\hello-world-1.$(BUILD_NUMBER)-SNAPSHOT.war'
             }
             
         }
+        
         stage("Build"){
             steps{
                   bat "mvn package"
@@ -27,6 +28,13 @@ pipeline {
                //   bat 'echo $WORKSPACE/Artifact_$BUILD_NUMBER'
             }
             
+        }
+        stage("Artifect file exist"){
+            steps{
+               echo 'cheking file in work space'
+                fileExists 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Maven-project-pipeline\\target\\hello-world-1.$(BUILD_NUMBER)-SNAPSHOT.war'
+                echo 'file exist'
+            }
         }
          stage ('Server'){
             steps {
