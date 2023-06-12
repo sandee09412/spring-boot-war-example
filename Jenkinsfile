@@ -24,7 +24,7 @@ pipeline {
             }
             
         }
-         //         stage("Artifect file exist"){
+           stage("Artifect file exist"){
                steps{
                   echo 'cheking file in work space'
                    fileExists 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Maven-project-pipeline\\target\\hello-world-1.$(BUILD_NUMBER)-SNAPSHOT.war'
