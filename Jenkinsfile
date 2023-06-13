@@ -83,7 +83,9 @@ pipeline {
         }
         stage ('Removing files') {
             steps {
-                sh 'rm -rf $WORKSPACE/*'
+                //sh 'rm -rf $WORKSPACE/*'
+                sh 'rm -rf $C:\ProgramData\Jenkins\.jenkins\workspace\Maven-project-pipeline\target\hello-world-0.0.1-SNAPSHOT.war'
+               
             }
         }
        
