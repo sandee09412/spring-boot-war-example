@@ -83,7 +83,7 @@ pipeline {
         }
         stage ('Removing files') {
             steps {
-                bat 'rm -rf $WORKSPACE/*'
+                sh 'rm -rf $WORKSPACE/*'
             }
         }
        
