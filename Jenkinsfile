@@ -43,12 +43,12 @@ pipeline {
         stage('Build and Upload Artifact') {
     steps {
         script {
-           // sh 'mvn clean package'
+            bat 'mvn clean package'
             def server = Artifactory.server('Artifactory')
             server.upload(
                 fileSpec: [
                     pattern: '*.war',
-                    target: "${result}/${0.0.1-SNAPSHOT}/"
+                    target: "${result}/${ARTIFACT_VERSION}/"
                 ]
             )
         }
