@@ -40,31 +40,46 @@ pipeline {
                         )
             }
         }
-        stage('Upload'){
-            steps{
-                rtUpload (
-                 // buildNumber: BUILD_NUMBER,
-                 // buildName: JOB_NAME,
+        stage('Build and Upload Artifact') {
+    steps {
+        script {
+           // sh 'mvn clean package'
+            def server = Artifactory.server('Artifactory')
+            server.upload(
+                fileSpec: [
+                    pattern: '*.war',
+                    target: "${result}/${0.0.1-SNAPSHOT}/"
+                ]
+            )
+        }
+    }
+}
+
+        // stage('Upload'){
+        //     steps{
+        //         rtUpload (
+        //          // buildNumber: BUILD_NUMBER,
+        //          // buildName: JOB_NAME,
           
-                 serverId:"Artifactory" ,
-                  spec: '''{
-                   "files": [
-                      {
-                      "pattern": "*.war",
-                      "target": "example-repo-local"
-                      }
-                            ]
-                           }''',
-                        )
-            }
-        }
-        stage ('Publish build info') {
-            steps {
-                rtPublishBuildInfo (
-                    serverId: "Artifactory"
-                )
-            }
-        }
+        //          serverId:"Artifactory" ,
+        //           spec: '''{
+        //            "files": [
+        //               {
+        //               "pattern": "*.war",
+        //               "target": "example-repo-local"
+        //               }
+        //                     ]
+        //                    }''',
+        //                 )
+        //     }
+        // }
+        // stage ('Publish build info') {
+        //     steps {
+        //         rtPublishBuildInfo (
+        //             serverId: "Artifactory"
+        //         )
+        //     }
+        // }
         stage("Deploy on Test"){
             steps{
                 // deploy on container -> plugin
