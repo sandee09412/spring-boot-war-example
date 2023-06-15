@@ -3,13 +3,6 @@ pipeline {
      tools {
         maven 'MAVEN_HOME' 
         }
-    // stages {
-    //     stage("git checkout"){
-    //         steps{
-    //            // git url: 'https://github.com/sandee09412/spring-boot-war-example.git'
-    //             git branch: 'master', url: 'https://github.com/sandee09412/spring-boot-war-example.git'
-    //         }
-    //         }
         stage("Test"){
             steps{
                   bat "mvn test"
@@ -40,9 +33,6 @@ pipeline {
         stage('Upload'){
             steps{
                 rtUpload (
-                 buildNumber: BUILD_NUMBER,
-                 buildName: JOB_NAME,
-          
                  serverId:"Artifactory" ,
                   spec: '''{
                    "files": [
@@ -97,14 +87,6 @@ pipeline {
                    deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://65.1.84.56:8080')], contextPath: '/app', war: '**/*.war'
                }
         }
-        // stage ('Removing files') {
-        //     steps {
-        //        // bat 'rm -rf *.war'
-        //         bat 'rmdir *.war'
-        //         //sh 'rm -rf $C:/ProgramData/Jenkins/.jenkins\workspace\Maven-project-pipeline\target\hello-world-0.0.1-SNAPSHOT.war'
-               
-        //     }
-        // }
        
     }
     post{
