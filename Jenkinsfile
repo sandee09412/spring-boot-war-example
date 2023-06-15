@@ -37,24 +37,41 @@ pipeline {
                         )
             }
         }
-        stage('Upload'){
-            steps{
-                rtUpload (
-                 buildNumber: BUILD_NUMBER,
-                 buildName: JOB_NAME,
+        // stage('Upload'){
+        //     steps{
+        //         rtUpload (
+        //          buildNumber: BUILD_NUMBER,
+        //          buildName: JOB_NAME,
           
-                 serverId:"Artifactory" ,
-                  spec: '''{
-                   "files": [
-                      {
-                      "pattern": "*.war",
-                      "target": "logic-ops-lab-libs-snapshot-local"
-                      }
-                            ]
-                           }''',
-                        )
-            }
+        //          serverId:"Artifactory" ,
+        //           spec: '''{
+        //            "files": [
+        //               {
+        //               "pattern": "*.war",
+        //               "target": "logic-ops-lab-libs-snapshot-local"
+        //               }
+        //                     ]
+        //                    }''',
+        //                 )
+        //     }
+        // }
+        stage('Build and Upload Artifact') {
+    steps {
+        script {
+          //  sh 'mvn clean package'
+            def server = Artifactory.server('Artifactory')
+            server.upload(
+                fileSpec: [
+                  //  pattern: 'target/*.jar',
+                    pattern: '*.war',
+                     target: "${logic-ops-lab-libs-snapshot-local}/${ARTIFACT_VERSION}/"
+                   // target: "${REPOSITORY_NAME}/${ARTIFACT_VERSION}/"
+                ]
+            )
         }
+    }
+}
+
         stage ('Publish build info') {
             steps {
                 rtPublishBuildInfo (
