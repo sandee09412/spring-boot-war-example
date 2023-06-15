@@ -29,7 +29,7 @@ pipeline {
             steps {
                rtServer (
                  id: "Artifactory",
-                 url: 'http://3.110.170.191:8082/artifactory',
+                 url: 'http://13.235.243.28:8082/artifactory',
                  username: 'sandeep',
                   password: 'Troy@567',
                   bypassProxy: true,
@@ -58,7 +58,6 @@ pipeline {
         stage('Build and Upload Artifact') {
     steps {
         script {
-          //  sh 'mvn clean package'
             def server = Artifactory.server('Artifactory')
             server.upload(
                 fileSpec: [
