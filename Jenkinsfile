@@ -45,21 +45,6 @@ pipeline {
                         )
             }
         }
-//         stage('Build and Upload Artifact') {
-//     steps {
-//         script {
-//             def server = Artifactory.server('Artifactory')
-//             server.upload(
-//                 fileSpec: [
-//                   //  pattern: 'target/*.jar',
-//                     pattern: '*.war',
-//                      target: "${logic-ops-lab-libs-snapshot-local}/${ARTIFACT_VERSION}/"
-//                    // target: "${REPOSITORY_NAME}/${ARTIFACT_VERSION}/"
-//                 ]
-//             )
-//         }
-//     }
-// }
 
         stage ('Publish build info') {
             steps {
