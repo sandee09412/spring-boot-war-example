@@ -32,7 +32,7 @@ pipeline {
             steps {
                rtServer (
                  id: "Artifactory",
-                 url: 'http://3.109.48.200:8082/artifactory',
+                 url: 'http://43.205.214.12:8082/artifactory',
                  username: 'sandeep',
                   password: 'Troy@567',
                   bypassProxy: true,
