@@ -1,8 +1,14 @@
 pipeline {
     agent any
+    
      tools {
         maven 'MAVEN_HOME' 
         }
+    environment {
+        FILE_PATH = '*.war'
+        REPOSITORY_NAME = 'example-repo-local'
+        ARTIFACT_VERSION = bat(script: 'mvn -q -Dexec.executable="echo" -Dexec.args=\'${project.version}\' --non-recursive exec:exec', returnStdout: true).trim()
+    }
     stages {
         stage("git checkout"){
             steps{
@@ -28,32 +34,45 @@ pipeline {
             }
             
         }
-         stage ('Server'){
+        stage('Upload Artifact') {
             steps {
-               rtServer (
-                 id: "Artifactory",
-                 url: 'http://43.205.214.12:8082/artifactory',
-                 username: 'sandeep',
-                  password: 'Troy@567',
-                  bypassProxy: true,
-                   timeout: 300
-                        )
+                script {
+                    def server = Artifactory.server('Artifactory')
+                    server.upload(
+                        fileSpec: [
+                            pattern: FILE_PATH,
+                            target: "${REPOSITORY_NAME}/${ARTIFACT_VERSION}/"
+                        ]
+                    )
+                }
             }
         }
-        stage('Build and Upload Artifact') {
-    steps {
-        script {
-           // bat 'mvn clean package'
-           // def server = Artifactory.server('Artifactory')
-            server.upload(
-                fileSpec: [
-                    pattern: '*.war',
-                    target: "${result}/${ARTIFACT_VERSION}/"
-                ]
-            )
-        }
-    }
-}
+//          stage ('Server'){
+//             steps {
+//                rtServer (
+//                  id: "Artifactory",
+//                  url: 'http://43.205.214.12:8082/artifactory',
+//                  username: 'sandeep',
+//                   password: 'Troy@567',
+//                   bypassProxy: true,
+//                    timeout: 300
+//                         )
+//             }
+//         }
+//         stage('Build and Upload Artifact') {
+//     steps {
+//         script {
+//            // bat 'mvn clean package'
+//            // def server = Artifactory.server('Artifactory')
+//             server.upload(
+//                 fileSpec: [
+//                     pattern: '*.war',
+//                     target: "${result}/${ARTIFACT_VERSION}/"
+//                 ]
+//             )
+//         }
+//     }
+// }
 
         // stage('Upload'){
         //     steps{
