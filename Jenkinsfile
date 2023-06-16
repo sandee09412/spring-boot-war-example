@@ -37,7 +37,7 @@ pipeline {
         stage('Upload Artifact') {
             steps {
                 script {
-                    def server = Artifactory.server('Artifactory')
+                    def server = Artifactory.server('Artifactory1')
                     server.upload(
                         fileSpec: [
                             pattern: FILE_PATH,
