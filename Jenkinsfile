@@ -36,7 +36,7 @@ pipeline {
         stage('Upload Artifact') {
             steps {
                 script {
-                    def artifactVersion = bat(script: 'MAVEN_HOME help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true).trim()
+                    def artifactVersion = bat(script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true).trim()
                    // def artifactVersion = sh(script: '/path/to/maven/bin/mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true).trim()
 
                     rtMavenDeployer(
