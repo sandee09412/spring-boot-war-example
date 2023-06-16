@@ -43,7 +43,7 @@ pipeline {
                         id: "Artifactory",
                         releaseRepo: "${REPOSITORY_NAME}/${artifactVersion}",
                         snapshotRepo: "${REPOSITORY_NAME}/snapshot",
-                        server: 'Artifactory'
+                        server: "Artifactory"
                     ) {
                         deployArtifacts()
                     }
