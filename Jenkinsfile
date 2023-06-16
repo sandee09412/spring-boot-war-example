@@ -36,8 +36,7 @@ pipeline {
         stage('Upload Artifact') {
             steps {
                 script {
-                    def pom = readMavenPom file: 'pom.xml'
-                    def artifactVersion = pom.version
+                    def artifactVersion = sh(script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true).trim()
                     
                     rtMavenDeployer(
                         id: 'Artifactory',
