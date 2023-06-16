@@ -36,8 +36,9 @@ pipeline {
         stage('Upload Artifact') {
             steps {
                 script {
-                    def artifactVersion = sh(script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true).trim()
-                    
+                    def artifactVersion = bat(script: 'C:\Program Files\Maven\apache-maven-3.8.2 help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true).trim()
+                   // def artifactVersion = sh(script: '/path/to/maven/bin/mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true).trim()
+
                     rtMavenDeployer(
                         id: 'Artifactory',
                         releaseRepo: "${REPOSITORY_NAME}/${artifactVersion}",
