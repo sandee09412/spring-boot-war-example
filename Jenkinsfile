@@ -7,7 +7,7 @@ pipeline {
     environment {
         FILE_PATH = '*.war'
         REPOSITORY_NAME = 'example-repo-local'
-        ARTIFACT_VERSION = bat(script: 'mvn -q -Dexec.executable="echo" -Dexec.args=\'${project.version}\' --non-recursive exec:exec', returnStdout: true).trim()
+        ARTIFACT_VERSION = bat(script: 'mvn -q -Dexec.executable="echo" -Dexec.args=\'${0.0.1-SNAPSHOT}\' --non-recursive exec:exec', returnStdout: true).trim()
     }
     stages {
         stage("git checkout"){
