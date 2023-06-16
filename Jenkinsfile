@@ -6,8 +6,7 @@ pipeline {
         }
     environment {
         FILE_PATH = '*.war'
-        REPOSITORY_NAME = 'example-repo-local'
-        ARTIFACT_VERSION = bat(script: 'mvn -q -Dexec.executable="echo" -Dexec.args=\'${0.0.1-SNAPSHOT}\' --non-recursive exec:exec', returnStdout: true).trim()
+        REPOSITORY_NAME = 'result'  
     }
     stages {
         stage("git checkout"){
@@ -37,13 +36,17 @@ pipeline {
         stage('Upload Artifact') {
             steps {
                 script {
-                    def server = Artifactory.server("Artifactory")
-                    server.upload(
-                        fileSpec: [
-                            pattern: FILE_PATH,
-                            target: "${REPOSITORY_NAME}/${ARTIFACT_VERSION}/"
-                        ]
-                    )
+                    def pom = readMavenPom file: 'pom.xml'
+                    def artifactVersion = pom.version
+                    
+                    rtMavenDeployer(
+                        id: 'Artifactory',
+                        releaseRepo: "${REPOSITORY_NAME}/${artifactVersion}",
+                        snapshotRepo: "${REPOSITORY_NAME}/snapshot",
+                        server: 'Artifactory'
+                    ) {
+                        deployArtifacts()
+                    }
                 }
             }
         }
