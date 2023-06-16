@@ -40,7 +40,7 @@ pipeline {
                    // def artifactVersion = sh(script: '/path/to/maven/bin/mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true).trim()
 
                     rtMavenDeployer(
-                        id: 'Artifactory',
+                        id: "Artifactory",
                         releaseRepo: "${REPOSITORY_NAME}/${artifactVersion}",
                         snapshotRepo: "${REPOSITORY_NAME}/snapshot",
                         server: 'Artifactory'
