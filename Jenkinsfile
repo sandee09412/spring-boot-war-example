@@ -102,7 +102,6 @@ pipeline {
                  //  def repositoryWithJobNumber = "${REPOSITORY_NAME}/${jobNumber}"
                 //echo "repo number: ${repositoryWithJobNumber}"
                 rtUpload (
-                echo "Job Number: ${jobNumber}"
                  serverId:"Artifactory" ,
                   spec: '''{
                    "files": [
