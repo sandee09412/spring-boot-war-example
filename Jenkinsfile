@@ -6,7 +6,8 @@ pipeline {
         }
     environment {
         FILE_PATH = 'C:/ProgramData/Jenkins/.jenkins/workspace/Maven-project-pipeline/target/'
-        REPOSITORY_NAME = 'logic-ops-lab-libs-snapshot-local'  
+        REPOSITORY_NAME = 'logic-ops-lab-libs-snapshot-local' 
+        import groovy.json.JsonOutput
     }
     stages {
         stage("git checkout"){
