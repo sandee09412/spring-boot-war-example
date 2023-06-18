@@ -100,18 +100,14 @@ pipeline {
                 script {
                     def jobNumber = currentBuild.number
                     echo "Job Number: ${jobNumber}"
-                    // def artifactVersion = bat(
-                    //        script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout',
-                    //        returnStdout: true
-                    //  ).trim()
                 rtUpload (
-          
+          echo "Job Number: ${jobNumber}"
                  serverId:"Artifactory" ,
                   spec: '''{
                    "files": [
                       {
                       "pattern": "*.war",
-                      "target": "${REPOSITORY_NAME}/${jobNumber}/" 
+                      "target": "${REPOSITORY_NAME}/echo "build Number: ${jobNumber}"/" 
                       }
                             ]
                            }''',
