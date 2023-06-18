@@ -100,13 +100,14 @@ pipeline {
                 script {
                     def jobNumber = currentBuild.number
                     echo "Job Number: ${jobNumber}"
+                    def repositoryWithJobNumber = "${REPOSITORY_NAME}/${jobNumber}"
                 rtUpload (
                  serverId:"Artifactory" ,
                   spec: '''{
                    "files": [
                       {
                       "pattern": "*.war",
-                      "target": "${REPOSITORY_NAME}/${jobNumber}/" 
+                      "target": "${repositoryWithJobNumber}" 
                       }
                             ]
                            }''',
