@@ -43,12 +43,12 @@ pipeline {
         stage('Upload Artifact') {
             steps {
                 script {
-                    def artifactVersion = sh(
+                    def artifactVersion = bat(
                         script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout',
                         returnStdout: true
                     ).trim()
 
-                    def filePath = sh(
+                    def filePath = bat(
                         script: 'echo $FILE_PATH',
                         returnStdout: true
                     ).trim()
