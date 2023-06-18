@@ -107,7 +107,7 @@ pipeline {
                    "files": [
                       {
                       "pattern": "*.war",
-                      "target": "${REPOSITORY_NAME}/${echo ${jobNumber}}/" 
+                      "target": "${REPOSITORY_NAME}/$"{echo ${jobNumber}"}/" 
                       }
                             ]
                            }''',
