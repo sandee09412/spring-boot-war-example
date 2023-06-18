@@ -31,7 +31,7 @@ pipeline {
         stage('Upload Artifact') {
             steps {
                 script {
-                    def pom = readMavenPom file: 'pom.xml'
+                    def pom = readMavenDescriptor(file: 'pom.xml')
                     def artifactVersion = pom.version
 
                     def server = Artifactory.newServer url: 'http://13.127.107.133:8082/artifactory', credentialsId: 'Artifactory'
