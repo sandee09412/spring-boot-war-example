@@ -110,7 +110,6 @@ pipeline {
                       {
                       "pattern": "*.war",
                       "target": "${REPOSITORY_NAME}/${artifactVersion}/" 
-                     // "target": "example-repo-local"
                       }
                             ]
                            }''',
