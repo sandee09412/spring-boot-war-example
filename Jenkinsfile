@@ -5,7 +5,7 @@ pipeline {
         maven 'MAVEN_HOME' 
         }
     environment {
-        FILE_PATH = 'C:/ProgramData/Jenkins/.jenkins/workspace/Maven-project-pipeline/target/'
+     //   FILE_PATH = 'C:/ProgramData/Jenkins/.jenkins/workspace/Maven-project-pipeline/target/'
         REPOSITORY_NAME = 'logic-ops-lab-libs-snapshot-local' 
     }
     stages {
@@ -41,35 +41,36 @@ pipeline {
             }
         }
         
-        stage('Upload Artifact') {
-            steps {
-                script {
-                    def artifactVersion = bat(
-                        script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout',
-                        returnStdout: true
-                    ).trim()
+        // stage('Upload Artifact') {
+        //     steps {
+        //         script {
+        //             def artifactVersion = bat(
+        //                 script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout',
+        //                 returnStdout: true
+        //             ).trim()
 
-                    def filePath = bat(
-                        script: 'echo $FILE_PATH',
-                        returnStdout: true
-                    ).trim()
+        //             def filePath = bat(
+        //                 script: 'echo $FILE_PATH',
+        //                 returnStdout: true
+        //             ).trim()
 
-                    def server = Artifactory.newServer url: 'http://13.127.107.133:8082/artifactory', credentialsId: 'Artifactory'
-                    def uploadSpec = """
-                    {
-                        "files": [
-                            {
-                                "pattern": "local/${filePath.replaceAll('\\\\', '\\\\\\\\')}/*.war",
-                                "target": "${REPOSITORY_NAME}/${artifactVersion.replaceAll('[\r\n]+', '')}/"
-                            }
-                        ]
-                    }
-                    """
+        //             def server = Artifactory.newServer url: 'http://13.127.107.133:8082/artifactory', credentialsId: 'Artifactory'
+        //             def uploadSpec = """
+        //             {
+        //                 "files": [
+        //                     {
+        //                         "pattern": "local/${filePath.replaceAll('\\\\', '\\\\\\\\')}/*.war",
+        //                         "target": "${REPOSITORY_NAME}/${artifactVersion.replaceAll('[\r\n]+', '')}/"
+        //                     }
+        //                 ]
+        //             }
+        //             """
 
-                    server.upload(JsonOutput.toJson(uploadSpec), "")
-                }
-            }
-        }
+        //             server.upload(JsonOutput.toJson(uploadSpec), "")
+                    
+        //         }
+        //     }
+        // }
     // stage('Upload Artifact') {
     //         steps {
     //             script {
@@ -92,64 +93,38 @@ pipeline {
     //             }
     //         }
     //     }
-        // stage('Upload Artifact') {
-        //     steps {
-        //         script {
-        //             def artifactVersion = bat(script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true).trim()
-        //            // def artifactVersion = sh(script: '/path/to/maven/bin/mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true).trim()
+        
 
-        //             rtMavenDeployer(
-        //                 id: "Artifactory",
-        //                 releaseRepo: "${REPOSITORY_NAME}/${artifactVersion}",
-        //                 snapshotRepo: "${REPOSITORY_NAME}/snapshot",
-        //                 server: "Artifactory"
-        //             ) {
-        //                 deployArtifacts()
-        //             }
-        //         }
-        //     }
-        // }
-         
-//         stage('Build and Upload Artifact') {
-//     steps {
-//         script {
-//            // bat 'mvn clean package'
-//            // def server = Artifactory.server('Artifactory')
-//             server.upload(
-//                 fileSpec: [
-//                     pattern: '*.war',
-//                     target: "${result}/${ARTIFACT_VERSION}/"
-//                 ]
-//             )
-//         }
-//     }
-// }
-
-        // stage('Upload'){
-        //     steps{
-        //         rtUpload (
-        //          // buildNumber: BUILD_NUMBER,
-        //          // buildName: JOB_NAME,
+        stage('Upload'){
+            steps{
+                script {
+                    def artifactVersion = bat(
+                           script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout',
+                           returnStdout: true
+                     ).trim()
+                rtUpload (
           
-        //          serverId:"Artifactory" ,
-        //           spec: '''{
-        //            "files": [
-        //               {
-        //               "pattern": "*.war",
-        //               "target": "example-repo-local"
-        //               }
-        //                     ]
-        //                    }''',
-        //                 )
-        //     }
-        // }
-        // stage ('Publish build info') {
-        //     steps {
-        //         rtPublishBuildInfo (
-        //             serverId: "Artifactory"
-        //         )
-        //     }
-        // }
+                 serverId:"Artifactory" ,
+                  spec: '''{
+                   "files": [
+                      {
+                      "pattern": "*.war",
+                      "target": "${REPOSITORY_NAME}/${artifactVersion}/" 
+                     // "target": "example-repo-local"
+                      }
+                            ]
+                           }''',
+                         )
+                     }  
+            }
+        }
+        stage ('Publish build info') {
+            steps {
+                rtPublishBuildInfo (
+                    serverId: "Artifactory"
+                )
+            }
+        }
         stage("Deploy on Test"){
             steps{
                 // deploy on container -> plugin
