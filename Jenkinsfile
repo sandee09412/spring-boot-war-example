@@ -101,13 +101,12 @@ pipeline {
                     def jobNumber = currentBuild.number
                     echo "Job Number: ${jobNumber}"
                 rtUpload (
-          echo "Job Number: ${jobNumber}"
                  serverId:"Artifactory" ,
                   spec: '''{
                    "files": [
                       {
                       "pattern": "*.war",
-                      "target": "${REPOSITORY_NAME}/$"{echo ${jobNumber}"}/" 
+                      "target": "${REPOSITORY_NAME}/${jobNumber}/" 
                       }
                             ]
                            }''',
