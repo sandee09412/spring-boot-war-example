@@ -5,7 +5,7 @@ pipeline {
         maven 'MAVEN_HOME' 
         }
     environment {
-        FILE_PATH = '*.war'
+        FILE_PATH = 'C:\ProgramData\Jenkins\.jenkins\workspace\Maven-project-pipeline\target\hello-world-0.0.1-SNAPSHOT'
         REPOSITORY_NAME = 'logic-ops-lab-libs-snapshot-local'  
     }
     stages {
