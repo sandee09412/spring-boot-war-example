@@ -63,7 +63,11 @@ pipeline {
                         ]
                     ]
 
-                    server.upload(uploadSpec)
+                    if (isUnix()) {
+                        bat "nohup ${tool(name: 'Maven', type: 'maven').getMavenHome()}/bin/mvn deploy:deploy-file -Dfile=${filePath} -Durl=${server.getUrl()}/${uploadSpec.files[0].target} -DrepositoryId=${server.getId()}"
+                    } else {
+                        bat "mvn deploy:deploy-file -Dfile=${filePath} -Durl=${server.getUrl()}/${uploadSpec.files[0].target} -DrepositoryId=${server.getId()}"
+                    }
                 }
             }
         }
