@@ -98,10 +98,12 @@ pipeline {
         stage('Upload'){
             steps{
                 script {
-                    def artifactVersion = bat(
-                           script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout',
-                           returnStdout: true
-                     ).trim()
+                    def jobNumber = currentBuild.number
+                    echo "Job Number: ${jobNumber}"
+                    // def artifactVersion = bat(
+                    //        script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout',
+                    //        returnStdout: true
+                    //  ).trim()
                 rtUpload (
           
                  serverId:"Artifactory" ,
@@ -109,7 +111,7 @@ pipeline {
                    "files": [
                       {
                       "pattern": "*.war",
-                      "target": "${REPOSITORY_NAME}/${artifactVersion}/" 
+                      "target": "${REPOSITORY_NAME}/${jobNumber}/" 
                       }
                             ]
                            }''',
