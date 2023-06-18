@@ -63,7 +63,7 @@ pipeline {
                         ]
                     ]
 
-                    server.upload(JsonOutput.toJson(uploadSpec))
+                    server.upload(uploadSpec)
                 }
             }
         }
