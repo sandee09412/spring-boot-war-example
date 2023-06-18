@@ -6,7 +6,7 @@ pipeline {
         }
     environment {
         FILE_PATH = 'C:/ProgramData/Jenkins/.jenkins/workspace/Maven-project-pipeline/target/'
-        REPOSITORY_NAME = 'result'  
+        REPOSITORY_NAME = 'logic-ops-lab-libs-snapshot-local'  
     }
     stages {
         stage("git checkout"){
@@ -31,32 +31,52 @@ pipeline {
         stage('Upload Artifact') {
             steps {
                 script {
-                    def artifactVersion = bat(script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true).trim()
-                   // def artifactVersion = sh(script: '/path/to/maven/bin/mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true).trim()
+                    def pom = readMavenPom file: 'pom.xml'
+                    def artifactVersion = pom.version
 
-                    rtMavenDeployer(
-                        id: "Artifactory",
-                        releaseRepo: "${REPOSITORY_NAME}/${artifactVersion}",
-                        snapshotRepo: "${REPOSITORY_NAME}/snapshot",
-                        server: "Artifactory"
-                    ) {
-                        deployArtifacts()
-                    }
+                    def server = Artifactory.newServer url: 'http://13.127.107.133:8082/artifactory', credentialsId: 'Artifactory'
+                    def uploadSpec = """{
+                        "files": [
+                            {
+                                "pattern": "${FILE_PATH}",
+                                "target": "${REPOSITORY_NAME}/${artifactVersion}/"
+                            }
+                        ]
+                    }"""
+
+                    server.upload(uploadSpec)
                 }
             }
         }
-         stage ('Server'){
-            steps {
-               rtServer (
-                 id: "Artifactory",
-                 url: 'http://13.127.107.133:8082/artifactory',
-                 username: 'sandeep',
-                  password: 'Troy@567',
-                  bypassProxy: true,
-                   timeout: 300
-                        )
-            }
-        }
+        // stage('Upload Artifact') {
+        //     steps {
+        //         script {
+        //             def artifactVersion = bat(script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true).trim()
+        //            // def artifactVersion = sh(script: '/path/to/maven/bin/mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true).trim()
+
+        //             rtMavenDeployer(
+        //                 id: "Artifactory",
+        //                 releaseRepo: "${REPOSITORY_NAME}/${artifactVersion}",
+        //                 snapshotRepo: "${REPOSITORY_NAME}/snapshot",
+        //                 server: "Artifactory"
+        //             ) {
+        //                 deployArtifacts()
+        //             }
+        //         }
+        //     }
+        // }
+        //  stage ('Server'){
+        //     steps {
+        //        rtServer (
+        //          id: "Artifactory",
+        //          url: 'http://13.127.107.133:8082/artifactory',
+        //          username: 'sandeep',
+        //           password: 'Troy@567',
+        //           bypassProxy: true,
+        //            timeout: 300
+        //                 )
+        //     }
+        // }
 //         stage('Build and Upload Artifact') {
 //     steps {
 //         script {
