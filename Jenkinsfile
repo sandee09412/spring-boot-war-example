@@ -101,6 +101,7 @@ pipeline {
                     def jobNumber = currentBuild.number
                     echo "Job Number: ${jobNumber}"
                    def repositoryWithJobNumber = "${REPOSITORY_NAME}/${jobNumber}"
+                     echo "repo number: ${repositoryWithJobNumber}"
                 rtUpload (
                  serverId:"Artifactory" ,
                   spec: '''{
