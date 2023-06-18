@@ -28,11 +28,13 @@ pipeline {
             }
             
         }
-        stage('Upload Artifact') {
+    stage('Upload Artifact') {
             steps {
                 script {
-                    def pom = readMavenPom(file: 'pom.xml')
-                    def artifactVersion = pom.version
+                    def artifactVersion = bat(
+                        script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout',
+                        returnStdout: true
+                    ).trim()
 
                     def server = Artifactory.newServer url: 'http://13.127.107.133:8082/artifactory', credentialsId: 'Artifactory'
                     def uploadSpec = """{
