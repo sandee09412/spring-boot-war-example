@@ -45,18 +45,18 @@ pipeline {
                 }
             }
         }
-//          stage ('Server'){
-//             steps {
-//                rtServer (
-//                  id: "Artifactory",
-//                  url: 'http://43.205.214.12:8082/artifactory',
-//                  username: 'sandeep',
-//                   password: 'Troy@567',
-//                   bypassProxy: true,
-//                    timeout: 300
-//                         )
-//             }
-//         }
+         stage ('Server'){
+            steps {
+               rtServer (
+                 id: "Artifactory",
+                 url: 'http://13.127.107.133:8082/artifactory',
+                 username: 'sandeep',
+                  password: 'Troy@567',
+                  bypassProxy: true,
+                   timeout: 300
+                        )
+            }
+        }
 //         stage('Build and Upload Artifact') {
 //     steps {
 //         script {
