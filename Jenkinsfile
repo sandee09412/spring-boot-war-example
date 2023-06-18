@@ -16,8 +16,6 @@ pipeline {
             }
         stage("Test"){
             steps{
-                // mvn test
-               // sh "mvn test"
                   bat "mvn test"
                // slackSend channel: 'youtubejenkins', message: 'Job Started'
                 
@@ -27,9 +25,6 @@ pipeline {
         stage("Build"){
             steps{
                   bat "mvn package"
-                //sh "mvn package"
-               // slackSend channel: 'youtubejenkins', message: 'Job build'
-               //   bat 'echo $WORKSPACE/Artifact_$BUILD_NUMBER'
             }
             
         }
@@ -131,12 +126,6 @@ pipeline {
        
     }
     post{
-   //      success {
-   //   emailext attachLog: true, body: 'Email sent out from Jenkins', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'prabhakarq3@gmail.com'
-   //   }
-   // failure {
-   //   emailext attachLog: true, body: 'Email sent out from Jenkins', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'prabhakarq3@gmail.com'
-   // }
         always{
             echo "========always========"
         }
