@@ -40,6 +40,7 @@ pipeline {
                         )
             }
         }
+        
         stage('Upload Artifact') {
             steps {
                 script {
@@ -54,52 +55,21 @@ pipeline {
                     ).trim()
 
                     def server = Artifactory.newServer url: 'http://13.127.107.133:8082/artifactory', credentialsId: 'Artifactory'
-                    def uploadSpec = [
-                        files: [
-                            [
-                                pattern: "local/${filePath.replaceAll('\\\\', '/')}/\\*.war",
-                                target: "${REPOSITORY_NAME}/${artifactVersion.replaceAll('[\\r\\n]+', '')}/"
-                            ]
+                    def uploadSpec = """
+                    {
+                        "files": [
+                            {
+                                "pattern": "local/${filePath.replaceAll('\\\\', '\\\\\\\\')}/*.war",
+                                "target": "${REPOSITORY_NAME}/${artifactVersion.replaceAll('[\r\n]+', '')}/"
+                            }
                         ]
-                    ]
-
-                    if (isUnix()) {
-                        bat "nohup ${tool(name: 'Maven', type: 'maven').getMavenHome()}/bin/mvn deploy:deploy-file -Dfile=${filePath} -Durl=${server.getUrl()}/${uploadSpec.files[0].target} -DrepositoryId=${server.getId()}"
-                    } else {
-                        bat "mvn deploy:deploy-file -Dfile=${filePath} -Durl=${server.getUrl()}/${uploadSpec.files[0].target} -DrepositoryId=${server.getId()}"
                     }
+                    """
+
+                    server.upload(JsonOutput.toJson(uploadSpec), "")
                 }
             }
         }
-        // stage('Upload Artifact') {
-        //     steps {
-        //         script {
-        //             def artifactVersion = bat(
-        //                 script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout',
-        //                 returnStdout: true
-        //             ).trim()
-
-        //             def filePath = bat(
-        //                 script: 'echo $FILE_PATH',
-        //                 returnStdout: true
-        //             ).trim()
-
-        //             def server = Artifactory.newServer url: 'http://13.127.107.133:8082/artifactory', credentialsId: 'Artifactory'
-        //             def uploadSpec = """
-        //             {
-        //                 "files": [
-        //                     {
-        //                         "pattern": "local/${filePath.replaceAll('\\\\', '\\\\\\\\')}/*.war",
-        //                         "target": "${REPOSITORY_NAME}/${artifactVersion.replaceAll('[\r\n]+', '')}/"
-        //                     }
-        //                 ]
-        //             }
-        //             """
-
-        //             server.upload(uploadSpec)
-        //         }
-        //     }
-        // }
     // stage('Upload Artifact') {
     //         steps {
     //             script {
