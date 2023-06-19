@@ -67,7 +67,7 @@ pipeline {
         stage("Deploy on Test"){
             steps{
                 // deploy on container -> plugin
-                  deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://65.1.135.134:8080')], contextPath: '/app', war: '**/*.war'
+                  deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://ec2-65-1-135-134.ap-south-1.compute.amazonaws.com:8080')], contextPath: '/app', war: '**/*.war'
                 //deploy adapters: [tomcat9(credentialsId: 'tomcatnew', path: '', url: 'http://3.111.168.163:8080')], contextPath: 'app', war: '**/*.war'
             }
             
