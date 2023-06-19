@@ -98,19 +98,19 @@ pipeline {
         stage('Upload'){
             steps{
                 script {
-                   //  def jobNumber = currentBuild.number
+                    def jobNumber = currentBuild.number
                  //  def repositoryWithJobNumber = "${REPOSITORY_NAME}/${jobNumber}"
                 //echo "repo number: ${repositoryWithJobNumber}"
                 rtUpload (
                  serverId:"Artifactory" ,
-                  spec: '''{
+                  spec: """{
                    "files": [
                       {
                       "pattern": "*.war",
-                      "target": "${REPOSITORY_NAME}/${currentBuild.number}/"
+                      "target": "${REPOSITORY_NAME}/${jobNumber}/"
                       }
                             ]
-                           }''',
+                           }""",
                          )
                      }  
             }
