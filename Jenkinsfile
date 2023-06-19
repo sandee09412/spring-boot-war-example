@@ -98,7 +98,7 @@ pipeline {
         stage('Upload'){
             steps{
                 script {
-                     def jobNumber = currentBuild.number
+                   //  def jobNumber = currentBuild.number
                  //  def repositoryWithJobNumber = "${REPOSITORY_NAME}/${jobNumber}"
                 //echo "repo number: ${repositoryWithJobNumber}"
                 rtUpload (
@@ -107,7 +107,7 @@ pipeline {
                    "files": [
                       {
                       "pattern": "*.war",
-                      "target": "${REPOSITORY_NAME}/${jobNumber1}/"
+                      "target": "${REPOSITORY_NAME}/${currentBuild.number}/"
                       }
                             ]
                            }''',
