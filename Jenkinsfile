@@ -11,7 +11,7 @@ pipeline {
         stage("git checkout"){
             steps{
                 git url: 'https://github.com/sandee09412/spring-boot-war-example.git'
-                slackSend channel: 'youtubejenkins', message: 'checkout code from repo'
+                slackSend channel: 'youtubejenkins', message: 'Code checkout successfully'
             }
             }
         stage("Test"){
