@@ -32,7 +32,7 @@ pipeline {
             steps {
                rtServer (
                  id: "Artifactory",
-                 url: 'http://13.232.141.42:8082/artifactory',
+                 url: 'http://ec2-13-232-141-158.ap-south-1.compute.amazonaws.com:8082/artifactory',
                  username: 'sandeep',
                   password: 'Troy@567',
                   bypassProxy: true,
@@ -71,7 +71,7 @@ pipeline {
         stage("Deploy on Test"){
             steps{
                 // deploy on container -> plugin
-                  deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://ec2-65-1-135-134.ap-south-1.compute.amazonaws.com:8080')], contextPath: '/app', war: '**/*.war'
+                  deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://ec2-13-232-18-223.ap-south-1.compute.amazonaws.com:8080')], contextPath: '/app', war: '**/*.war'
                 //deploy adapters: [tomcat9(credentialsId: 'tomcatnew', path: '', url: 'http://3.111.168.163:8080')], contextPath: 'app', war: '**/*.war'
                   slackSend channel: 'youtubejenkins', message: 'Artifect deploy  successful on test server'
             }
@@ -85,7 +85,7 @@ pipeline {
             
                steps{
                    // deploy on container -> plugin 13.127.93.35
-                   deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://13.233.247.36:8080')], contextPath: '/app', war: '**/*.war'
+                   deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://ec2-52-66-209-8.ap-south-1.compute.amazonaws.com:8080')], contextPath: '/app', war: '**/*.war'
                    //  deploy adapters: [tomcat9(credentialsId: 'tomcatserver', path: '', url: 'http://13.232.70.143:8080')], contextPath: '/app', war: '**/*.war'
                    slackSend channel: 'youtubejenkins', message: 'Artifect deploy  successful on prod server'
                }
