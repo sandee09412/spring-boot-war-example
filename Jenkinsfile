@@ -25,7 +25,7 @@ pipeline {
         stage("Build"){
             steps{
                   bat "mvn package"
-                  slackSend channel: 'youtubejenkins', message: 'build job success'
+                  slackSend channel: 'youtubejenkins', message: 'job build successfully'
             } 
         }
 //          stage('SonarQube analysis') {
@@ -68,7 +68,7 @@ pipeline {
                            }""",
                          )
                      }  
-                slackSend channel: 'youtubejenkins', message: 'Artifect uploded successful on Jfrog'
+                slackSend channel: 'youtubejenkins', message: 'Artifect uploded successfully on Jfrog'
             }
         }
         stage ('Publish build info') {
@@ -83,7 +83,7 @@ pipeline {
                 // deploy on container -> plugin
                   deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://ec2-13-232-18-223.ap-south-1.compute.amazonaws.com:8080')], contextPath: '/app', war: '**/*.war'
                 //deploy adapters: [tomcat9(credentialsId: 'tomcatnew', path: '', url: 'http://3.111.168.163:8080')], contextPath: 'app', war: '**/*.war'
-                  slackSend channel: 'youtubejenkins', message: 'Artifect deploy  successful on test server'
+                  slackSend channel: 'youtubejenkins', message: 'Artifact successfully deployed to production server'
             }
             
         }
@@ -97,7 +97,7 @@ pipeline {
                    // deploy on container -> plugin 13.127.93.35
                    deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://ec2-52-66-209-8.ap-south-1.compute.amazonaws.com:8080')], contextPath: '/app', war: '**/*.war'
                    //  deploy adapters: [tomcat9(credentialsId: 'tomcatserver', path: '', url: 'http://13.232.70.143:8080')], contextPath: '/app', war: '**/*.war'
-                   slackSend channel: 'youtubejenkins', message: 'Artifect deploy  successful on prod server'
+                   slackSend channel: 'youtubejenkins', message: 'Artifact successfully deployed to production server'
                }
         }
        
