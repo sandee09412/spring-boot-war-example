@@ -42,7 +42,7 @@ pipeline {
             steps {
                rtServer (
                  id: "Artifactory",
-                 url: 'http://ec2-13-232-79-60.ap-south-1.compute.amazonaws.com:8082/artifactory',
+                 url: 'http://ec2-65-0-72-5.ap-south-1.compute.amazonaws.com:8082/artifactory',
                  username: 'sandeep',
                   password: 'Troy@567',
                   bypassProxy: true,
@@ -81,9 +81,9 @@ pipeline {
         stage("Deploy on Test"){
             steps{
                 // deploy on container -> plugin
-                  deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://ec2-15-206-100-186.ap-south-1.compute.amazonaws.com:8080')], contextPath: '/app', war: '**/*.war'
+                  deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://ec2-13-234-217-224.ap-south-1.compute.amazonaws.com:8080')], contextPath: '/app', war: '**/*.war'
                 //deploy adapters: [tomcat9(credentialsId: 'tomcatnew', path: '', url: 'http://3.111.168.163:8080')], contextPath: 'app', war: '**/*.war'
-                  slackSend channel: 'youtubejenkins', message: 'Artifact successfully deployed to production server'
+                  slackSend channel: 'youtubejenkins', message: 'Artifact successfully deployed to Test server'
             }
             
         }
@@ -95,7 +95,7 @@ pipeline {
             
                steps{
                    // deploy on container -> plugin 13.127.93.35
-                   deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://ec2-13-232-49-173.ap-south-1.compute.amazonaws.com:8080')], contextPath: '/app', war: '**/*.war'
+                   deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://ec2-65-0-76-125.ap-south-1.compute.amazonaws.com:8080')], contextPath: '/app', war: '**/*.war'
                    //  deploy adapters: [tomcat9(credentialsId: 'tomcatserver', path: '', url: 'http://13.232.70.143:8080')], contextPath: '/app', war: '**/*.war'
                    slackSend channel: 'youtubejenkins', message: 'Artifact successfully deployed to production server'
                }
