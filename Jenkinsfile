@@ -17,7 +17,7 @@ pipeline {
             }
         stage("Test"){
             steps{
-                  bat "mvn test"
+                mvnTest()
                   slackSend channel: 'youtubejenkins', message: 'Test cases run successfully '
                 
             }
@@ -25,7 +25,7 @@ pipeline {
         }
         stage("Build"){
             steps{
-                  bat "mvn package"
+                  mvnBuild()
                   slackSend channel: 'youtubejenkins', message: 'job build successfully'
             } 
         }
@@ -39,19 +39,19 @@ pipeline {
 //     }
 //         }
 //         }
-        stage ('Server'){
-            steps {
-               rtServer (
-                 id: "Artifactory",
-                 url: 'http://ec2-43-205-228-6.ap-south-1.compute.amazonaws.com:8082/artifactory',
-                 username: 'sandeep',
-                  password: 'Troy@567',
-                  bypassProxy: true,
-                   timeout: 300
-                        )
-                slackSend channel: 'youtubejenkins', message: 'validating Jfrog server details'
-            }
-        }
+        // stage ('Server'){
+        //     steps {
+        //        rtServer (
+        //          id: "Artifactory",
+        //          url: 'http://ec2-43-205-228-6.ap-south-1.compute.amazonaws.com:8082/artifactory',
+        //          username: 'sandeep',
+        //           password: 'Troy@567',
+        //           bypassProxy: true,
+        //            timeout: 300
+        //                 )
+        //         slackSend channel: 'youtubejenkins', message: 'validating Jfrog server details'
+        //     }
+        // }
 
         stage('Upload'){
             steps{
@@ -79,42 +79,42 @@ pipeline {
                 )
             }
         }
-        stage("Deploy on Test"){
-            steps{
-                // deploy on container -> plugin
-                  deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://ec2-13-235-245-26.ap-south-1.compute.amazonaws.com:8080')], contextPath: '/app', war: '**/*.war'
-                //deploy adapters: [tomcat9(credentialsId: 'tomcatnew', path: '', url: 'http://3.111.168.163:8080')], contextPath: 'app', war: '**/*.war'
-                  slackSend channel: 'youtubejenkins', message: 'Artifact successfully deployed to Test server'
-            }
+        // stage("Deploy on Test"){
+        //     steps{
+        //         // deploy on container -> plugin
+        //           deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://ec2-13-235-245-26.ap-south-1.compute.amazonaws.com:8080')], contextPath: '/app', war: '**/*.war'
+        //         //deploy adapters: [tomcat9(credentialsId: 'tomcatnew', path: '', url: 'http://3.111.168.163:8080')], contextPath: 'app', war: '**/*.war'
+        //           slackSend channel: 'youtubejenkins', message: 'Artifact successfully deployed to Test server'
+        //     }
             
-        }
-        stage("Deploy on Prod"){
-               input {
-                   message "Should we continue?"
-                   ok "Yes we Should"
-               }
+        // }
+    //     stage("Deploy on Prod"){
+    //            input {
+    //                message "Should we continue?"
+    //                ok "Yes we Should"
+    //            }
             
-               steps{
-                   // deploy on container -> plugin 13.127.93.35
-                   deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://ec2-15-207-106-135.ap-south-1.compute.amazonaws.com:8080')], contextPath: '/app', war: '**/*.war'
-                   //  deploy adapters: [tomcat9(credentialsId: 'tomcatserver', path: '', url: 'http://13.232.70.143:8080')], contextPath: '/app', war: '**/*.war'
-                   slackSend channel: 'youtubejenkins', message: 'Artifact successfully deployed to production server'
-               }
-        }
+    //            steps{
+    //                // deploy on container -> plugin 13.127.93.35
+    //                deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://ec2-15-207-106-135.ap-south-1.compute.amazonaws.com:8080')], contextPath: '/app', war: '**/*.war'
+    //                //  deploy adapters: [tomcat9(credentialsId: 'tomcatserver', path: '', url: 'http://13.232.70.143:8080')], contextPath: '/app', war: '**/*.war'
+    //                slackSend channel: 'youtubejenkins', message: 'Artifact successfully deployed to production server'
+    //            }
+    //     }
        
-    }
-    post{
-        always{
-            echo "========always========"
-        }
-        success{
-            echo "========pipeline executed successfully ========"
-            slackSend channel: 'youtubejenkins', message: 'Job Success'
-        }
-        failure{
-            echo "========pipeline execution failed========"
-            slackSend channel: 'youtubejenkins', message: 'Job UnSuccess'
-        } 
-    }
+    // }
+    // post{
+    //     always{
+    //         echo "========always========"
+    //     }
+    //     success{
+    //         echo "========pipeline executed successfully ========"
+    //         slackSend channel: 'youtubejenkins', message: 'Job Success'
+    //     }
+    //     failure{
+    //         echo "========pipeline execution failed========"
+    //         slackSend channel: 'youtubejenkins', message: 'Job UnSuccess'
+    //     } 
+    // }
    
 }
