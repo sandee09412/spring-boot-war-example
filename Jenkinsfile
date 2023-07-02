@@ -103,18 +103,18 @@ pipeline {
     //     }
        
     // }
-    // post{
-    //     always{
-    //         echo "========always========"
-    //     }
-    //     success{
-    //         echo "========pipeline executed successfully ========"
-    //         slackSend channel: 'youtubejenkins', message: 'Job Success'
-    //     }
-    //     failure{
-    //         echo "========pipeline execution failed========"
-    //         slackSend channel: 'youtubejenkins', message: 'Job UnSuccess'
-    //     } 
-    // }
+    post{
+        always{
+            echo "========always========"
+        }
+        success{
+            echo "========pipeline executed successfully ========"
+            slackSend channel: 'youtubejenkins', message: 'Job Success'
+        }
+        failure{
+            echo "========pipeline execution failed========"
+            slackSend channel: 'youtubejenkins', message: 'Job UnSuccess'
+        } 
+    }
    
 }
