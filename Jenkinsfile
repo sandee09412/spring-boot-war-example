@@ -53,32 +53,32 @@ pipeline {
         //     }
         // }
 
-        stage('Upload'){
-            steps{
-                script {
-                    def jobNumber = currentBuild.number
-                rtUpload (
-                 serverId:"Artifactory" ,
-                  spec: """{
-                   "files": [
-                      {
-                      "pattern": "*.war",
-                      "target": "${REPOSITORY_NAME}/${jobNumber}/"
-                      }
-                            ]
-                           }""",
-                         )
-                     }  
-                slackSend channel: 'youtubejenkins', message: 'Artifect uploded successfully on Jfrog'
-            }
-        }
-        stage ('Publish build info') {
-            steps {
-                rtPublishBuildInfo (
-                    serverId: "Artifactory"
-                )
-            }
-        }
+        // stage('Upload'){
+        //     steps{
+        //         script {
+        //             def jobNumber = currentBuild.number
+        //         rtUpload (
+        //          serverId:"Artifactory" ,
+        //           spec: """{
+        //            "files": [
+        //               {
+        //               "pattern": "*.war",
+        //               "target": "${REPOSITORY_NAME}/${jobNumber}/"
+        //               }
+        //                     ]
+        //                    }""",
+        //                  )
+        //              }  
+        //         slackSend channel: 'youtubejenkins', message: 'Artifect uploded successfully on Jfrog'
+        //     }
+        // }
+        // stage ('Publish build info') {
+        //     steps {
+        //         rtPublishBuildInfo (
+        //             serverId: "Artifactory"
+        //         )
+        //     }
+        // }
         // stage("Deploy on Test"){
         //     steps{
         //         // deploy on container -> plugin
